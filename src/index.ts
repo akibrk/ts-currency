@@ -1,23 +1,29 @@
 export class Currency {
   /**
-   *
-   * @param dollar
-   * @returns
-   */
-  public stringToCents(dollar: string): number {
-    const amounts = dollar.split('.');
-    const centAmount: number = Number(amounts[0]) * 100;
-    const totalAmount = centAmount + amounts.length > 1 ? Number(amounts[1]) : 0;
-
-    return totalAmount;
-  }
-
-  /**
-   *
+   * Convert string amount to cents
    * @param amount
    * @returns
    */
-  public normalize(amount: string) {
+  public static stringToCents(amount: string): number {
+    if (typeof amount !== 'string') throw new Error('Invalid argument type');
+    let amountValue = Number(amount) * 100;
+    if (typeof amount === 'string') {
+      const [dollars, cents] = amount.replace(/[^0-9.]/g, '').split('.');
+      if (cents !== undefined) {
+        amountValue = Number(dollars) * 100;
+        if (cents.length > 1) amountValue += Number(cents.slice(0, 2));
+        else amountValue += Number(cents) * 10;
+      }
+    }
+    return amountValue;
+  }
+
+  /**
+   * Normalize a string amount to two decimal points
+   * @param amount
+   * @returns string
+   */
+  public static normalize(amount: string) {
     if (typeof amount === 'string') {
       const [dollars, _cents] = amount.replace(/[^0-9.]/g, '').split('.');
       let cents = _cents;
@@ -30,13 +36,13 @@ export class Currency {
   }
 
   /**
-   *
-   * @param amount
-   * @param currency
-   * @param pre
-   * @returns
+   * Format a currency with symbol
+   * @param amount in string
+   * @param currency 3 digit ISO Currency Code ie. USD, GBP, CAD, BDT
+   * @param pre symbol is present before or after the amount
+   * @returns string
    */
-  public formatWithSymbol(amount: string, currency: string, pre = true) {
+  public static formatWithSymbol(amount: string, currency: string, pre = true) {
     if (typeof amount != 'number' && typeof amount != 'string') {
       throw new Error('Invalid argument type');
     }

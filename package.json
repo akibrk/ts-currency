@@ -35,7 +35,7 @@
   "homepage": "https://github.com/akibrk/ts-currency#readme",
   "license": "MIT",
   "dependencies": {
-    "jest": "^28.1.0"
+
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
