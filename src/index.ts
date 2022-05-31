@@ -1,5 +1,10 @@
 export class Currency {
-  stringToCents(dollar: string): number {
+  /**
+   *
+   * @param dollar
+   * @returns
+   */
+  public stringToCents(dollar: string): number {
     const amounts = dollar.split('.');
     const centAmount: number = Number(amounts[0]) * 100;
     const totalAmount = centAmount + amounts.length > 1 ? Number(amounts[1]) : 0;
@@ -7,7 +12,12 @@ export class Currency {
     return totalAmount;
   }
 
-  normalize(amount: string) {
+  /**
+   *
+   * @param amount
+   * @returns
+   */
+  public normalize(amount: string) {
     if (typeof amount === 'string') {
       const [dollars, _cents] = amount.replace(/[^0-9.]/g, '').split('.');
       let cents = _cents;
@@ -19,7 +29,14 @@ export class Currency {
     return (Number(amount) / 100).toFixed(2);
   }
 
-  formatWithCurrency(amount: string, currency: string, pre = true) {
+  /**
+   *
+   * @param amount
+   * @param currency
+   * @param pre
+   * @returns
+   */
+  public formatWithSymbol(amount: string, currency: string, pre = true) {
     if (typeof amount != 'number' && typeof amount != 'string') {
       throw new Error('Invalid argument type');
     }
