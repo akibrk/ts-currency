@@ -1,5 +1,5 @@
 ## Change Log
 
-### 27/2022 Version 1.0.0
+### 31/5/2022 Version 1.0.0
 
-- Init
+- First release

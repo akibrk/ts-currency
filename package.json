@@ -1,7 +1,7 @@
 {
   "name": "@akibrk/currency",
   "version": "1.0.0",
-  "description": "Utility functions to deal with currencies/formatting",
+  "description": "Utility functions for dealing with currency formatting.",
   "main": "index.ts",
   "bin": "dist/index.js",
   "types": "dist/index.d.ts",
