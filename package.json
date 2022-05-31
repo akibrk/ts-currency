@@ -1,0 +1,15 @@
+{
+  "name": "@akibrk/currency",
+  "version": "1.0.0",
+  "description": "Utitlity functions to deal with currencies/formatting",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "currency",
+    "formatting"
+  ],
+  "author": "Akib Khan",
+  "license": "ISC"
+}
