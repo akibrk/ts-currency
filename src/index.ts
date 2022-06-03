@@ -6,43 +6,46 @@ export class Currency {
    */
   public static stringToCents(amount: string): number {
     if (typeof amount !== 'string') throw new Error('Invalid argument type');
-    let amountValue = Number(amount) * 100;
-    if (typeof amount === 'string') {
-      const [dollars, cents] = amount.replace(/[^0-9.]/g, '').split('.');
-      if (cents !== undefined) {
-        amountValue = Number(dollars) * 100;
-        if (cents.length > 1) amountValue += Number(cents.slice(0, 2));
-        else amountValue += Number(cents) * 10;
-      }
+
+    amount = amount.replace(/[\s,] /g, ''); // replace all spaces and commas
+    const isValidAmount = amount.match(/^[0-9]{0,128}\.?[0-9]{0,128}$/g); // Check the formatting
+    if (!isValidAmount) {
+      throw new Error('Malformed argument');
     }
-    return amountValue;
+
+    const [whole, decimal] = amount.split('.');
+    const decimalAmount: number = decimal ? Number(decimal.slice(0, 2)) : 0;
+    const amountInCents: number = Number(whole) * 100 + decimalAmount;
+    return amountInCents;
   }
 
   /**
-   * Normalize a string amount to two decimal points
+   * Normalize a string amount to n decimal points
    * @param amount
    * @returns string
    */
-  public static normalize(amount: string) {
-    if (typeof amount === 'string') {
-      const [dollars, _cents] = amount.replace(/[^0-9.]/g, '').split('.');
-      let cents = _cents;
-      if (cents === undefined) cents = '00';
-      else if (cents.length < 2) cents = `${cents}0`;
-      else if (cents.length > 2) cents = cents.substring(0, 2);
-      return `${dollars ? dollars : '0'}.${cents}`;
+  public static normalize(amount: string, points: number = 2): string {
+    if (typeof amount !== 'string') {
+      throw new Error(`Invalid Argument: Expected string got ${typeof amount}`);
     }
-    return (Number(amount) / 100).toFixed(2);
+
+    amount = amount.replace(/[\s,] /g, ''); // replace all spaces and commas
+    const isValidAmount = amount.match(/^[0-9]{0,128}\.?[0-9]{0,128}$/g); // Check the formatting
+    if (!isValidAmount) {
+      throw new Error('Malformed argument');
+    }
+
+    return Number(amount).toFixed(Math.abs(Math.round(points)));
   }
 
   /**
    * Format a currency with symbol
    * @param amount in string
-   * @param currency 3 digit ISO Currency Code ie. USD, GBP, CAD, BDT
+   * @param currency 3 digit ISO Currency Code ie. USD, GBP, CAD, BDT, EUR, JPY
    * @param pre symbol is present before or after the amount
    * @returns string
    */
-  public static formatWithSymbol(amount: string, currency: string, pre = true) {
+  public static formatWithSymbol(amount: string, currency: string, pre = true, fix: number = 2): string {
     if (typeof amount != 'number' && typeof amount != 'string') {
       throw new Error('Invalid argument type');
     }
