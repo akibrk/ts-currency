@@ -1,6 +1,6 @@
 {
   "name": "@akibrk/currency",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utility functions for dealing with currency formatting.",
   "main": "dist/index.js",
   "bin": "dist/index.js",
@@ -34,9 +34,7 @@
   },
   "homepage": "https://github.com/akibrk/ts-currency#readme",
   "license": "MIT",
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "jest": "^26.6.3",
